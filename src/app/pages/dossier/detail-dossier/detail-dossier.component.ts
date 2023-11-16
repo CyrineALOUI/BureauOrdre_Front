@@ -7,6 +7,7 @@ import { Observable, forkJoin} from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
+
 @Component({
   selector: 'app-detail-dossier',
   templateUrl: './detail-dossier.component.html',
@@ -19,11 +20,14 @@ export class DetailDossierComponent implements OnInit {
   pdfs: any[] = [];
   numeroCourrier: string; 
   thumbnailUrls: SafeUrl[] = [];
+ 
 
 
 
-
-  constructor(private sanitizer: DomSanitizer, private dossierService: DossierService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private sanitizer: DomSanitizer, 
+              private dossierService: DossierService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -100,21 +104,6 @@ export class DetailDossierComponent implements OnInit {
     });
   }
 
-  /*loadThumbnail() {
-    this.dossierService.getThumbnail(this.numeroCourrier).subscribe(
-      (data) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.thumbnailUrl = reader.result as string;
-        };
-        reader.readAsDataURL(data);
-      },
-      (error) => {
-        console.error('Erreur lors du chargement de la miniature', error);
-      }
-    );
-  }*/
-  
   loadMiniatures(idDossier: number) {
     this.dossierService.getMiniaturesByDossierId(idDossier)
       .pipe(
@@ -132,15 +121,13 @@ export class DetailDossierComponent implements OnInit {
         this.thumbnailUrls = thumbnailUrls;
       });
   }
-  
-  
-  
-  
-  
-  
-  
 
-
-
+  supprimerMiniature(index: number): void {
+    if (index >= 0 && index < this.thumbnailUrls.length) {
+      this.thumbnailUrls.splice(index, 1);
+      console.log("Supprimée")
+    }
+  }
+  
 }
 
