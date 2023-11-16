@@ -1,0 +1,74 @@
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header bg-transparent">
+          <a href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Revenir vers la Liste des Dossiers</a>
+        </div>
+
+
+        <div class="card-body">
+          <h3 class="mb-0">Dossier : {{ dossier.nomDossier }}</h3>
+          <br>
+          <div *ngIf="!enEdition">
+          <div class="col-12 text-right">
+            <button class="btn btn-primary" (click)="activerEdition()"><i class="fa fa-edit"></i> |  Modifier</button>
+            <button class="btn btn-danger" (click)="deleteDossier(dossier.idDossier)"><i class="fa fa-trash"></i> |  Supprimer</button>
+          </div>
+        </div>
+
+        <!--<div *ngIf="pdfs.length > 0">
+          <h4>PDFs associés à ce dossier :</h4>
+          <ul>
+            <li *ngFor="let pdf of pdfs">
+              <a [href]="pdf.lien" target="_blank">{{ pdf.nomDuPdf }}</a>
+            </li>
+          </ul>
+        </div>-->
+
+        <div *ngFor="let data of pdfs">
+          <canvas id="pdf-canvas"></canvas>
+        </div>
+
+          <div *ngIf="enEdition">
+            <form (submit)="enregistrerModifications()">
+              <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="nomDossier" class="form-control-label" >Nom Dossier</label>
+                  <input type="text" name="nomDossier" id="nomDossier" class="form-control form-control-alternative" [(ngModel)]="dossier.nomDossier" required>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="etatAvancement" class="form-control-label" >Etat Dossier</label>
+                  <select name="etatAvancement" class="form-control form-control-alternative" [(ngModel)]="dossier.etatDossier" required>
+                    <option value="NON_ARCHIVE">Non Archivé</option>
+                    <option value="ARCHIVE">Archivé</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 text-right">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> |  Enregistrer</button>
+            </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
