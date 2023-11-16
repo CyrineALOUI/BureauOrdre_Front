@@ -163,4 +163,7 @@ export class CourrierService {
     updateAppelOffre(numeroCourrier: string, appelOffreDto: AppelOffreDto): Observable<void> {
       return this.http.put<void>(`${this.host}/modifier-appel-offre/${numeroCourrier}`, appelOffreDto);
     }
+
+
+   
 }

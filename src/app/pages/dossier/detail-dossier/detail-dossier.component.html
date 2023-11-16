@@ -25,20 +25,15 @@
           </div>
         </div>
 
-        <!--<div *ngIf="pdfs.length > 0">
-          <h4>PDFs associés à ce dossier :</h4>
-          <ul>
-            <li *ngFor="let pdf of pdfs">
-              <a [href]="pdf.lien" target="_blank">{{ pdf.nomDuPdf }}</a>
-            </li>
-          </ul>
-        </div>-->
-
-        <div *ngFor="let data of pdfs">
-          <canvas id="pdf-canvas"></canvas>
+        <div *ngIf="thumbnailUrls.length > 0">
+          <div class="card-container">
+            <mat-card *ngFor="let thumbnailUrl of thumbnailUrls" class="thumbnail-card">
+              <img [src]="thumbnailUrl" alt="Miniature" class="thumbnail-image">
+            </mat-card>
+          </div>
         </div>
-
-          <div *ngIf="enEdition">
+        
+        <div *ngIf="enEdition">
             <form (submit)="enregistrerModifications()">
               <div class="row">
               <div class="col-lg-6">

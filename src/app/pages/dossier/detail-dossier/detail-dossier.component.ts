@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DossierService } from 'src/app/services/dossier.service';
 import Swal from 'sweetalert2';
 import * as pdfjsLib from 'pdfjs-dist';
+import { Observable, forkJoin} from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail-dossier',
@@ -10,11 +13,17 @@ import * as pdfjsLib from 'pdfjs-dist';
   styleUrls: ['./detail-dossier.component.scss']
 })
 export class DetailDossierComponent implements OnInit {
+  [x: string]: any;
   dossier: any = {};
   enEdition = false;
   pdfs: any[] = [];
+  numeroCourrier: string; 
+  thumbnailUrls: SafeUrl[] = [];
 
-  constructor(private dossierService: DossierService, private route: ActivatedRoute, private router: Router) { }
+
+
+
+  constructor(private sanitizer: DomSanitizer, private dossierService: DossierService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -26,9 +35,8 @@ export class DetailDossierComponent implements OnInit {
 
       this.dossierService.getPdfsByDossierId(idDossier).subscribe((data) => {
         this.pdfs = data;
-        for (const pdf of this.pdfs) {
-          this.loadPdf(pdf);
-        }
+
+        this.loadMiniatures(idDossier);
       });
     });
   }
@@ -91,6 +99,46 @@ export class DetailDossierComponent implements OnInit {
       });
     });
   }
+
+  /*loadThumbnail() {
+    this.dossierService.getThumbnail(this.numeroCourrier).subscribe(
+      (data) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.thumbnailUrl = reader.result as string;
+        };
+        reader.readAsDataURL(data);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement de la miniature', error);
+      }
+    );
+  }*/
+  
+  loadMiniatures(idDossier: number) {
+    this.dossierService.getMiniaturesByDossierId(idDossier)
+      .pipe(
+        switchMap((miniatures) => {
+          const thumbnailObservables: Observable<SafeUrl>[] = miniatures.map(filename =>
+            this.dossierService.getThumbnail(filename).pipe(
+              map(data => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(new Blob([data], { type: 'image/png' }))) as SafeUrl)
+            )
+          );
+          return forkJoin(thumbnailObservables);
+        })
+      )
+      .subscribe((thumbnailUrls) => {
+        console.log('Received Thumbnail URLs:', thumbnailUrls);
+        this.thumbnailUrls = thumbnailUrls;
+      });
+  }
+  
+  
+  
+  
+  
+  
+  
 
 
 

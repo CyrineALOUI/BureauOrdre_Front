@@ -20,5 +20,6 @@ export class Courrier {
   etatAvancement: string;
   type: string;
   pdfContent: Uint8Array;
+  thumbnailPath: string;
 
 }

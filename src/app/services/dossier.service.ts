@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Dossier } from '../models/dossier';
 
@@ -43,13 +43,27 @@ export class DossierService {
     return this.http.delete<void>(`${this.host}/delete-dossier/${idDossier}`);
   }
 
-  affecterDossierACourrier(nomDossier: string, numeroCourrier: string): Observable<void> {
+  /*affecterDossierACourrier(nomDossier: string, numeroCourrier: string): Observable<void> {
     return this.http.put<void>(`${this.host}/affect-dossier-courrier/${nomDossier}/${numeroCourrier}`, null);
-  }
+  }*/
 
   getPdfsByDossierId(idDossier: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.host}/getPdfs/${idDossier}`);
   }
+
+  getMiniaturesByDossierId(idDossier: number): Observable<string[]> {
+    const url = `${this.host}/miniatures/${idDossier}`;
+    return this.http.get<string[]>(url);
+  }
+
+  affecterDossierACourrier(nomDossier: string, numeroCourrier: string): Observable<void> {
+    return this.http.put<void>(`${this.host}/affect-dossier-courrier/${nomDossier}/${numeroCourrier}`, null);
+  }
+
+  getThumbnail(filename: string): Observable<ArrayBuffer> {
+    return this.http.get(`${this.host}/getThumbnail/${filename}`, { responseType: 'arraybuffer' });
+  }
+  
 
 
 }
