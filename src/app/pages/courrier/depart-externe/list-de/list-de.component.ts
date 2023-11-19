@@ -13,7 +13,7 @@ export class ListDEComponent implements OnInit {
 
   public departExterne!: DepartExterneDto[];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   searchTerm: string;
   searchedCourrier: DepartExterneDto[];
 

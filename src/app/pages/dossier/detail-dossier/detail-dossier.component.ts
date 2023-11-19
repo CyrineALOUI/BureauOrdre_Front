@@ -6,6 +6,8 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { Observable, forkJoin} from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+
 
 
 @Component({
@@ -14,16 +16,12 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./detail-dossier.component.scss']
 })
 export class DetailDossierComponent implements OnInit {
-  [x: string]: any;
   dossier: any = {};
   enEdition = false;
   pdfs: any[] = [];
   numeroCourrier: string; 
   thumbnailUrls: SafeUrl[] = [];
  
-
-
-
   constructor(private sanitizer: DomSanitizer, 
               private dossierService: DossierService,
               private route: ActivatedRoute,
@@ -83,9 +81,9 @@ export class DetailDossierComponent implements OnInit {
   }
 
   loadPdf(pdfs) {
-    const pdfData = pdfs.pdfContent; // Assurez-vous que pdfContent contient les données du PDF
+    const pdfData = pdfs.pdfContent; 
 
-    const pdfContainer = document.getElementById('pdf-canvas'); // Récupère l'élément canvas par son ID
+    const pdfContainer = document.getElementById('pdf-canvas'); 
 
     const loadingTask = pdfjsLib.getDocument({ data: pdfData });
     loadingTask.promise.then((pdf) => {
@@ -128,6 +126,10 @@ export class DetailDossierComponent implements OnInit {
       console.log("Supprimée")
     }
   }
+
   
+ 
+ 
+ 
 }
 

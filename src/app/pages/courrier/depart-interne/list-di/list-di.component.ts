@@ -14,7 +14,7 @@ export class ListDiComponent implements OnInit {
 
   public departInterne!: DepartInterneDto[];
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   searchTerm: string;
   searchedCourrier: DepartInterneDto[];
 

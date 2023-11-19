@@ -16,13 +16,13 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-arrAeroport', title: 'Arrivée Aéroport',  icon:'ni-email-83 text-primary', class: '' },
     { path: '/list-appOffre', title: 'Appel d"Offre',  icon:'ni-email-83 text-primary', class: '' },
     { path: '/list-dossiers', title: 'Dossiers',  icon:'ni-folder-17 text-primary', class: '' },
-    { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
+    /*{ path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
     { path: '/icons', title: 'Icons',  icon:'ni-planet text-blue', class: '' },
     { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-circle-08 text-red', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
-    { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }
+    { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' }*/
 ];
 
 @Component({
